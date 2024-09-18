@@ -1,0 +1,24 @@
+<project name="HelloWorldProject" default="compile" basedir=".">
+    <!-- Set the property for the source directory -->
+    <property name="src.dir" value="src"/>
+    <!-- Set the property for the build directory -->
+    <property name="build.dir" value="build"/>
+
+    <!-- Clean the build directory -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Compile the source code -->
+    <target name="compile" depends="clean">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}"/>
+    </target>
+
+    <!-- Run the program -->
+    <target name="run" depends="compile">
+        <java classname="HelloWorld" classpath="${build.dir}">
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+</project>
