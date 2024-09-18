@@ -1,6 +1,6 @@
 <project name="HelloWorldProject" default="compile" basedir=".">
     <!-- Set the property for the source directory -->
-    <property name="src.dir" value=""/>
+    <property name="src.dir" value="src"/>
     <!-- Set the property for the build directory -->
     <property name="build.dir" value="build"/>
 
