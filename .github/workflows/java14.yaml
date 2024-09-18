@@ -7,6 +7,13 @@ jobs:
     # You need to use the INSTALLATION_NAME from the previous step
     runs-on: arc-runner-set-seilor
     steps:
+    # Step 1: Check out the code from the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+      # Step 2: Run any commands or scripts
+    - name: List files in the repository
+      run: ls -la
     - run: javac HelloWorld.java
     - run: java HelloWorld
     - run: java -version
