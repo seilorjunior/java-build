@@ -1,4 +1,4 @@
-name: Actions Runner Controller Demo
+name: java14
 on:
   workflow_dispatch:
 
