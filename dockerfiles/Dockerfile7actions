@@ -1,0 +1,32 @@
+# Use the Ubuntu 18.04 base image
+FROM ghcr.io/actions/actions-runner:latest
+
+# Switch to root user to install packages
+USER root
+
+# Update the package list
+RUN apt-get update
+
+# Install necessary tools
+RUN apt-get install -y wget tar
+
+# Download OpenJDK 7 tarball
+RUN wget https://download.java.net/openjdk/jdk7u75/ri/jdk_ri-7u75-b13-linux-x64-18_dec_2014.tar.gz -O /tmp/jdk7.tar.gz
+
+# Create a directory for Java installation
+RUN mkdir -p /usr/local/java
+
+# Extract the tarball
+RUN tar -xzf /tmp/jdk7.tar.gz -C /usr/local/java --strip-components=1
+
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME /usr/local/java
+
+# Add Java binaries to PATH
+ENV PATH $JAVA_HOME/bin:$PATH
+
+# Verify installation
+RUN java -version
+
+# Specify default command
+CMD ["bash"]

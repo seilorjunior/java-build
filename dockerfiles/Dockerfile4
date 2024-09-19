@@ -1,0 +1,37 @@
+# Use the Ubuntu 22.04 base image
+FROM ubuntu:22.04
+
+# Update the package list and install necessary tools and dependencies
+RUN apt-get update && apt-get install -y wget tar bash libc6-i386 && apt-get clean
+
+# Copy the manually downloaded Java 5 binary installer into the container
+COPY j2sdk-1_4_2_19-linux-i586.bin /tmp/j2sdk-1_4_2_19-linux-i586.bin
+
+# Make the binary installer executable
+RUN chmod +x /tmp/j2sdk-1_4_2_19-linux-i586.bin
+
+# Run the binary installer using bash, suppressing the license agreement prompt
+RUN yes | /tmp/j2sdk-1_4_2_19-linux-i586.bin
+
+RUN mv j2sdk1.4.2_19 /opt/j2sdk1.4.2_19
+
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME /opt/j2sdk1.4.2_19
+
+# Add Java binaries to PATH
+ENV PATH $JAVA_HOME/bin:$PATH
+
+RUN wget https://archive.apache.org/dist/ant/binaries/apache-ant-1.8.2-bin.tar.gz
+
+RUN tar -xzf apache-ant-1.8.2-bin.tar.gz
+
+RUN mv apache-ant-1.8.2 /opt/ant
+
+ENV ANT_HOME /opt/ant
+ENV PATH $ANT_HOME/bin:$PATH
+
+# Verify installation
+##RUN java -version
+
+# Specify default command
+CMD ["bash"]

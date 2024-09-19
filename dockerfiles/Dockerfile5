@@ -1,0 +1,28 @@
+# Use the Ubuntu 22.04 base image
+FROM ubuntu:22.04
+
+# Update the package list and install necessary tools and dependencies
+RUN apt-get update && apt-get install -y wget tar bash libc6-i386 && apt-get clean
+
+# Copy the manually downloaded Java 5 binary installer into the container
+COPY jdk-1_5_0_22-linux-i586.bin /tmp/jdk-1_5_0_22-linux-i586.bin
+
+# Make the binary installer executable
+RUN chmod +x /tmp/jdk-1_5_0_22-linux-i586.bin
+
+# Run the binary installer using bash, suppressing the license agreement prompt
+RUN yes | /tmp/jdk-1_5_0_22-linux-i586.bin
+
+RUN mv jdk1.5.0_22 /opt/jdk1.5.0_22
+
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME /opt/jdk1.5.0_22
+
+# Add Java binaries to PATH
+ENV PATH $JAVA_HOME/bin:$PATH
+
+# Verify installation
+RUN java -version
+
+# Specify default command
+CMD ["bash"]
